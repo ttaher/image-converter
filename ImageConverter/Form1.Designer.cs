@@ -42,6 +42,8 @@
             this.txtOutputDir = new TextBox();
             this.btnOutputDir = new Button();
             this.lblOutputDir = new Label();
+            this.lblInputFormat = new Label();
+            this.cmbInputFormat = new ComboBox();
 
             this.menuStrip.SuspendLayout();
             this.panelDrop.SuspendLayout();
@@ -144,6 +146,8 @@
             this.panelBottom.Controls.Add(this.txtOutputDir);
             this.panelBottom.Controls.Add(this.lblOutputDir);
             this.panelBottom.Controls.Add(this.btnClear);
+            this.panelBottom.Controls.Add(this.cmbInputFormat);
+            this.panelBottom.Controls.Add(this.lblInputFormat);
             this.panelBottom.Controls.Add(this.btnBrowse);
             this.panelBottom.Controls.Add(this.cmbOutputFormat);
             this.panelBottom.Controls.Add(this.lblOutputFormat);
@@ -164,15 +168,27 @@
             this.cmbOutputFormat.Name = "cmbOutputFormat";
             this.cmbOutputFormat.Size = new Size(100, 23);
 
+            // lblInputFormat
+            this.lblInputFormat.AutoSize = true;
+            this.lblInputFormat.Location = new Point(225, 15);
+            this.lblInputFormat.Name = "lblInputFormat";
+            this.lblInputFormat.Text = "Input Filter:";
+
+            // cmbInputFormat
+            this.cmbInputFormat.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cmbInputFormat.Location = new Point(300, 12);
+            this.cmbInputFormat.Name = "cmbInputFormat";
+            this.cmbInputFormat.Size = new Size(90, 23);
+
             // btnBrowse
-            this.btnBrowse.Location = new Point(230, 10);
+            this.btnBrowse.Location = new Point(405, 10);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new Size(110, 28);
             this.btnBrowse.Text = "Browse Images...";
             this.btnBrowse.Click += new EventHandler(this.AddFilesMenuItem_Click);
 
             // btnClear
-            this.btnClear.Location = new Point(350, 10);
+            this.btnClear.Location = new Point(525, 10);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new Size(75, 28);
             this.btnClear.Text = "Clear";
@@ -180,7 +196,7 @@
 
             // btnConvert
             this.btnConvert.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.btnConvert.Location = new Point(440, 10);
+            this.btnConvert.Location = new Point(610, 10);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new Size(100, 28);
             this.btnConvert.Text = "Convert";
@@ -195,11 +211,11 @@
             // txtOutputDir
             this.txtOutputDir.Location = new Point(85, 44);
             this.txtOutputDir.Name = "txtOutputDir";
-            this.txtOutputDir.Size = new Size(370, 23);
+            this.txtOutputDir.Size = new Size(540, 23);
             this.txtOutputDir.ReadOnly = true;
 
             // btnOutputDir
-            this.btnOutputDir.Location = new Point(460, 43);
+            this.btnOutputDir.Location = new Point(630, 43);
             this.btnOutputDir.Name = "btnOutputDir";
             this.btnOutputDir.Size = new Size(80, 25);
             this.btnOutputDir.Text = "Change...";
@@ -208,7 +224,7 @@
             // progressBar
             this.progressBar.Location = new Point(13, 78);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new Size(527, 20);
+            this.progressBar.Size = new Size(697, 20);
 
             // lblStatus
             this.lblStatus.AutoSize = true;
@@ -219,7 +235,8 @@
             // Form1
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(800, 500);
+            this.ClientSize = new Size(730, 500);
+            this.MinimumSize = new Size(730, 400);
             this.Controls.Add(this.panelDrop);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.menuStrip);
@@ -263,5 +280,7 @@
         private Label lblOutputDir;
         private TextBox txtOutputDir;
         private Button btnOutputDir;
+        private Label lblInputFormat;
+        private ComboBox cmbInputFormat;
     }
 }

@@ -16,12 +16,17 @@ namespace ImageConverter
         private static readonly string[] OutputFormats =
             { "PNG", "JPEG", "BMP", "GIF", "TIFF", "ICO", "WEBP", "HEIC", "AVIF" };
 
+        private static readonly string[] InputFilters =
+            { "All", "PNG", "JPEG", "BMP", "GIF", "TIFF", "ICO", "WEBP", "HEIC", "AVIF" };
+
         public Form1()
         {
             InitializeComponent();
             LoadSettings();
             cmbOutputFormat.Items.AddRange(OutputFormats);
             cmbOutputFormat.SelectedIndex = 0;
+            cmbInputFormat.Items.AddRange(InputFilters);
+            cmbInputFormat.SelectedIndex = 0;
             txtOutputDir.Text = _outputDirectory;
             UpdateDropHintVisibility();
         }
@@ -44,7 +49,7 @@ namespace ImageConverter
             using var ofd = new OpenFileDialog
             {
                 Title = "Select Images",
-                Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tiff;*.tif;*.ico;*.webp;*.heic;*.heif;*.avif|All Files|*.*",
+                Filter = GetBrowseFilter(),
                 Multiselect = true
             };
 
@@ -53,6 +58,25 @@ namespace ImageConverter
                 AddFiles(ofd.FileNames);
             }
         }
+
+        private string GetBrowseFilter()
+        {
+            var inputFilter = cmbInputFormat.SelectedItem?.ToString() ?? "All";
+            if (inputFilter == "All")
+                return "Image Files|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tiff;*.tif;*.ico;*.webp;*.heic;*.heif;*.avif|All Files|*.*";
+
+            var exts = GetExtensionsForFilter(inputFilter);
+            var pattern = string.Join(";", exts.Select(e => "*" + e));
+            return $"{inputFilter} Files|{pattern}|All Files|*.*";
+        }
+
+        private static string[] GetExtensionsForFilter(string filter) => filter.ToUpper() switch
+        {
+            "JPEG" => new[] { ".jpg", ".jpeg" },
+            "TIFF" => new[] { ".tiff", ".tif" },
+            "HEIC" => new[] { ".heic", ".heif" },
+            _ => new[] { "." + filter.ToLowerInvariant() }
+        };
 
         private void ClearListMenuItem_Click(object? sender, EventArgs e)
         {
@@ -107,8 +131,13 @@ namespace ImageConverter
         {
             if (e.Data?.GetData(DataFormats.FileDrop) is string[] files)
             {
+                var inputFilter = cmbInputFormat.SelectedItem?.ToString() ?? "All";
                 var imageFiles = files.Where(f =>
-                    SupportedExtensions.Contains(Path.GetExtension(f).ToLowerInvariant())).ToArray();
+                {
+                    var ext = Path.GetExtension(f).ToLowerInvariant();
+                    if (!SupportedExtensions.Contains(ext)) return false;
+                    return inputFilter == "All" || MatchesInputFilter(f, inputFilter);
+                }).ToArray();
                 AddFiles(imageFiles);
             }
         }
@@ -247,6 +276,18 @@ namespace ImageConverter
             "AVIF" => ".avif",
             _ => ".png"
         };
+
+        private static bool MatchesInputFilter(string filePath, string filter)
+        {
+            var ext = Path.GetExtension(filePath).ToLowerInvariant();
+            return filter.ToUpper() switch
+            {
+                "JPEG" => ext is ".jpg" or ".jpeg",
+                "TIFF" => ext is ".tiff" or ".tif",
+                "HEIC" => ext is ".heic" or ".heif",
+                _ => ext == "." + filter.ToLowerInvariant()
+            };
+        }
 
         private static string FormatFileSize(long bytes)
         {
