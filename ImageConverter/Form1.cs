@@ -22,6 +22,7 @@ namespace ImageConverter
             LoadSettings();
             cmbOutputFormat.Items.AddRange(OutputFormats);
             cmbOutputFormat.SelectedIndex = 0;
+            txtOutputDir.Text = _outputDirectory;
             UpdateDropHintVisibility();
         }
 
@@ -73,7 +74,24 @@ namespace ImageConverter
             if (prefs.ShowDialog() == DialogResult.OK)
             {
                 _outputDirectory = prefs.SelectedDirectory;
+                txtOutputDir.Text = _outputDirectory;
                 SaveSettings();
+            }
+        }
+
+        private void BtnOutputDir_Click(object? sender, EventArgs e)
+        {
+            using var fbd = new FolderBrowserDialog
+            {
+                Description = "Select Output Directory",
+                SelectedPath = _outputDirectory,
+                ShowNewFolderButton = true
+            };
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                _outputDirectory = fbd.SelectedPath;
+                txtOutputDir.Text = _outputDirectory;
             }
         }
 

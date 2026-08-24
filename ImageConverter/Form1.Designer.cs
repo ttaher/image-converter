@@ -39,6 +39,10 @@
             this.progressBar = new ProgressBar();
             this.lblStatus = new Label();
 
+            this.txtOutputDir = new TextBox();
+            this.btnOutputDir = new Button();
+            this.lblOutputDir = new Label();
+
             this.menuStrip.SuspendLayout();
             this.panelDrop.SuspendLayout();
             this.panelBottom.SuspendLayout();
@@ -136,12 +140,15 @@
             this.panelBottom.Controls.Add(this.lblStatus);
             this.panelBottom.Controls.Add(this.progressBar);
             this.panelBottom.Controls.Add(this.btnConvert);
+            this.panelBottom.Controls.Add(this.btnOutputDir);
+            this.panelBottom.Controls.Add(this.txtOutputDir);
+            this.panelBottom.Controls.Add(this.lblOutputDir);
             this.panelBottom.Controls.Add(this.btnClear);
             this.panelBottom.Controls.Add(this.btnBrowse);
             this.panelBottom.Controls.Add(this.cmbOutputFormat);
             this.panelBottom.Controls.Add(this.lblOutputFormat);
             this.panelBottom.Dock = DockStyle.Bottom;
-            this.panelBottom.Height = 100;
+            this.panelBottom.Height = 130;
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Padding = new Padding(10);
 
@@ -179,14 +186,33 @@
             this.btnConvert.Text = "Convert";
             this.btnConvert.Click += new EventHandler(this.BtnConvert_Click);
 
+            // lblOutputDir
+            this.lblOutputDir.AutoSize = true;
+            this.lblOutputDir.Location = new Point(13, 47);
+            this.lblOutputDir.Name = "lblOutputDir";
+            this.lblOutputDir.Text = "Output Dir:";
+
+            // txtOutputDir
+            this.txtOutputDir.Location = new Point(85, 44);
+            this.txtOutputDir.Name = "txtOutputDir";
+            this.txtOutputDir.Size = new Size(370, 23);
+            this.txtOutputDir.ReadOnly = true;
+
+            // btnOutputDir
+            this.btnOutputDir.Location = new Point(460, 43);
+            this.btnOutputDir.Name = "btnOutputDir";
+            this.btnOutputDir.Size = new Size(80, 25);
+            this.btnOutputDir.Text = "Change...";
+            this.btnOutputDir.Click += new EventHandler(this.BtnOutputDir_Click);
+
             // progressBar
-            this.progressBar.Location = new Point(13, 50);
+            this.progressBar.Location = new Point(13, 78);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new Size(527, 20);
 
             // lblStatus
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new Point(13, 75);
+            this.lblStatus.Location = new Point(13, 103);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Text = "Ready";
 
@@ -234,5 +260,8 @@
         private Button btnClear;
         private ProgressBar progressBar;
         private Label lblStatus;
+        private Label lblOutputDir;
+        private TextBox txtOutputDir;
+        private Button btnOutputDir;
     }
 }
